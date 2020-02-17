@@ -1,0 +1,19 @@
+ #include <iostream>
+
+using namespace std;
+
+class MikanBox{
+public:
+    MikanBox(){
+        cout << "產生MikanBox物件" << endl;
+    }
+    ~MikanBox(){
+        cout << "MikanBox物件任務結束" << endl;
+    }
+};
+
+int main(){
+    MikanBox *pMikanBox = new MikanBox;
+    delete pMikanBox;
+    return 0;
+}

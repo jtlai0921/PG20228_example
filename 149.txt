@@ -1,0 +1,41 @@
+ #include <iostream>
+#include <string.h>
+
+class Person{
+public:
+    Person(){
+        name = NULL;
+    }
+    Person(char *str){
+        int len = (int)strlen(str);
+        name = new char[len + 1];
+        strcpy(name, str);
+    }
+    ~Person(){
+        delete [] name;
+    }
+    Person & operator=(const Person & psn);
+    char* GetName(){
+        return name;
+    }private:
+    char *name;
+};
+
+Person & Person::operator=(const Person & psn)
+{
+    if(this == &psn) return *this;
+
+    delete [] name;
+    int len = (int)strlen(psn.name);
+    name = new char[len + 1];
+    strcpy(name, psn.name);
+    return *this;
+}
+
+using namespace std;int main()
+{
+    Person psn1("Mikan"), psn2("Shiori");
+    psn1 = psn2;
+    cout << psn1.GetName() << endl;
+    return 0;
+}

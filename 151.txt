@@ -1,0 +1,107 @@
+ #include <iostream>
+#include <vector>
+
+// Ä«ªGÃş§O /////////////////////
+class Ringo
+{
+public:
+    enum color_index {color_red, color_green, color_yellow};
+    color_index color;   // ÃC¦â
+     double weight;        // ­«¶qd‚³
+    std::string kind;       // «~ºØ •ií  
+
+ Ringo() {
+        color = color_red;
+        weight = 320.0;
+        kind = "´I¤h";
+    }
+    Ringo(const enum color_index &c, const double w, const char *k) {
+        color = c;
+        weight = w;
+        kind = k;
+    }
+    const char *GetColorName() {
+         static const char *color_name[] = {"¬õ", "ºñ", "¶À"};
+         return color_name[color];
+    }
+    void PrintData() {          // Åã¥Ü¸ê®Æ
+            printf("ÃC¦â=%s ­«¶q=%5.1fg «~ºØ=%s\n",
+                 GetColorName(), weight, kind.c_str());
+    }
+};
+
+// Ä«ªG½cÄ«§O /////////////////////
+class RingoBox
+{
+public:
+    RingoBox() {Empty();}                                   // «Øºc¤l
+
+    bool Add(Ringo &r);                                        // °l¥[1­Ó
+    bool Del(int index);                                           // ¨ú¥X1­Ó
+    void Empty() {ringo.clear();}                           // §â½c¤l¥ÎªÅ
+    int GetTotalNum() {return (int)ringo.size();}   // ±N¼Æ¶qªğ¦^
+    double GetTotalWeight();                                 // ±NÁ`­«¶qªğ¦^
+    void PrintData();                                               // ªí¥Ü¥ş³¡¸ê®Æ
+
+private:
+    std::vector<Ringo> ringo;
+};
+ bool RingoBox::Add(Ringo &r)
+{
+    if(ringo.size() > 40) return false;
+    ringo.push_back(r);
+    return true;
+}
+
+bool RingoBox::Del(int index)
+{
+    if(index < 1 || index > (int)ringo.size()) return false;
+    ringo.erase(ringo.begin() + index - 1);
+    return true;
+}
+
+double RingoBox::GetTotalWeight()
+{
+    double w = 0;
+    for(std::vector<Ringo>::iterator i = ringo.begin(); i != ringo.end(); i++)
+        w += (*i).weight;
+    return w;
+}
+
+void RingoBox::PrintData()
+{
+    int n = GetTotalNum();
+
+    for(int i=0; i<n; i++)
+        ringo[i].PrintData();
+    printf("¦³Ä«ªG%d­Ó\n", n);
+    printf("Á`­«¶q %5.1fg\n", GetTotalWeight());
+}
+
+int main()
+{
+    static const char init_num = 4;
+    Ringo myRingo[] = {
+        Ringo(Ringo::color_red, 316.2, "´I¤h"),
+        Ringo(Ringo::color_green, 352.1, "¤ıªL"),
+        Ringo(Ringo::color_red, 341.8, "¬z»´"),
+        Ringo(Ringo::color_yellow, 320.7, "µØ²±¹yƒX")
+    };
+
+    RingoBox myRingoBox;
+    // ¥ş³¡©ñ¤J½c¤¤
+    for(int i=0; i<init_num; i++) {
+        bool ret = myRingoBox.Add(myRingo[i]);
+        if(ret)
+            std::cout << "°l¥[1­Ó" << std::endl;
+    }
+
+    // §â2¸¹±q½c¤¤®³¥X
+    bool ret = myRingoBox.Del(2);
+    if(ret)
+        std::cout << "§R°£1­Ó" << std::endl;
+
+    // ªí¥Ü¥ş³¡ªº¸ê®Æ
+    myRingoBox.PrintData();
+    return 0;
+}

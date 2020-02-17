@@ -1,0 +1,23 @@
+ #include <iostream>
+#include <math.h>
+
+using namespace std;
+
+void CalcSqrt()
+{
+    double n;
+    cout << "輸入0以上的數︰";
+    cin >> n;
+    if(n < 0) throw -1;
+    cout << "平方根為:" << sqrt(n) << endl;
+}
+
+int main()
+{
+    try{
+        CalcSqrt();
+    }catch(int &err){
+        cout << "錯誤碼:" << err << endl;
+    }
+    return 0;
+}

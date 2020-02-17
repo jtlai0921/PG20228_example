@@ -1,0 +1,138 @@
+ #include <iostream>
+
+#include <string.h>
+
+
+using namespace std;
+
+
+ class DrinkBox {
+
+public:
+
+    // 建構子
+
+    DrinkBox(){}
+
+    DrinkBox(char *str, int n1, int n2){
+
+        name = new char[strlen(str) + 1];
+
+        strcpy(name, str);
+
+        price = n1;
+
+        count = n2;
+
+    }
+
+    // 解構子
+     ~DrinkBox(){
+
+        delete [] name;
+
+    }
+
+
+    // 合計金額的計算
+
+     int GetTotalPrice(){
+
+        return count * price;
+
+    }
+
+    // 標題的表示
+
+     void PrintTitle(){
+
+        cout << "商品名\t\t單價\t數量\t金額" << endl;
+
+    }
+
+    // 商品資料的表示
+
+    void PrintData(){
+
+        cout << name << "\t\t" << price << "\t"
+
+            << count << "\t" << GetTotalPrice() << endl;
+ 
+   }
+
+
+    
+     char *name;       // 商品名
+     int price;        // 單價
+
+    int count;        // 數量
+
+};
+ class AlcholBox : public DrinkBox{
+
+public:
+
+    AlcholBox(char *str, int n1, int n2, float f){ //建構子
+    name = new char[strlen(str) + 1];
+   
+     strcpy(name, str);
+   
+     price = n1;
+   
+     count = n2;
+   
+     alcper = f;
+
+    }
+
+    void PrintTitle(){ //再定義
+         cout << "商品名(度數[%])\t單價\t數量\t金額" << endl;
+
+    }
+
+    void PrintData(){ //再定義
+         cout << name << "(" << alcper << ")\t" << price << "\t"
+
+            << count << "\t" << GetTotalPrice() << endl;
+
+    }
+
+
+private:
+
+    float alcper;     // 酒精的度數
+
+};
+
+
+int main()
+
+{
+
+    DrinkBox cofee("咖啡", 200, 3);
+
+    DrinkBox oolongtea("烏龍茶", 150, 2);
+
+    AlcholBox wine("葡萄酒", 300, 2, 15.0);
+
+
+    cofee.PrintTitle();
+
+    cofee.PrintData();
+
+    oolongtea.PrintData();
+
+    wine.PrintTitle();
+
+    wine.PrintData();
+
+
+    int sum = cofee.GetTotalPrice()
+
+         + oolongtea.GetTotalPrice() + wine.GetTotalPrice();
+
+    cout << "\n*** 合計金額" << sum << "日圓 ***" << endl;
+
+    return 0;
+
+}

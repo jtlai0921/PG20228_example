@@ -1,0 +1,27 @@
+ #include <iostream>
+#include <string.h>
+
+char name[]="global香織";
+
+ class Shouhin{
+public:
+    Shouhin();
+private:
+    char name[100];
+};
+
+Shouhin::Shouhin()
+{
+    char name[]="local香織";
+    strcpy(Shouhin::name, "成員變數的香織");
+
+    std::cout << "name = " << name << std::endl;
+    std::cout << "name = " << Shouhin::name << std::endl;
+    std::cout << "name = " << ::name << std::endl;
+}
+
+int main()
+{
+    Shouhin myShouhin;
+    return 0;
+}
